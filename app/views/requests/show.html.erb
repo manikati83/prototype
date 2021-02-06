@@ -1,0 +1,18 @@
+<h1><%= @request.title %></h1>
+<p><%= @request.content %></p>
+<% if current_user.id != @request.client_id && !current_user.apply?(@request) %>
+  <h2>応募はこちら</h2>
+  <h3>依頼者へのメッセージ</h3>
+  <%= form_with(model: @apply, local: true) do |f| %>
+    <%= hidden_field_tag :request_id, @request.id %>
+    <%= f.text_area :content %>
+    
+    <%= f.submit '応募する' %>
+  <% end %>
+<% elsif current_user.id != @request.client_id && current_user.apply?(@request) %>
+  <h2>応募済みです</h2>
+  <%= form_with(model: current_user.applies.find_by(request_id: @request.id), local: true, method: :delete) do |f| %>
+    <%= hidden_field_tag :request_id, @request.id %>
+    <%= f.submit '応募を取り消す' %>
+  <% end %>
+<% end %>

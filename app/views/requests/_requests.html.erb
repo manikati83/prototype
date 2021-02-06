@@ -1,0 +1,15 @@
+<ul class="list-unstyled mb-3">
+  <% requests.each do |request| %>
+    <li class="media mb-1">
+      <div class="media-body">
+        <div>
+          <h3><%= link_to request.title, request_path(request) %></h3>
+          <p><%= request.content %></p>
+          <p>期限:<%= request.days %></p>
+          <%= link_to request.client.name, user_path(request.client) %> <span class="text-muted">posted at <%= request.created_at %></span>
+        </div>
+      </div>
+    </li>
+  <% end %>
+  <%= paginate requests %>
+</ul>

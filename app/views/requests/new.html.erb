@@ -1,0 +1,15 @@
+<h1>依頼作成</h1>
+<%= form_with(model: @request, local: true) do |f| %>
+  <div>
+    <%= f.label :title, '依頼名' %>
+    <%= f.text_field :title %>
+    <%= f.label :content, '依頼内容' %>
+    <%= f.text_area :content %>
+    <%= f.label :days, '期限' %>
+    <%= f.number_field :days, class: "hoge", min: 1, max: 60 %>
+    
+    <%= f.submit '依頼する' %>
+  </div>
+<% end %>
+
+<%= link_to '依頼画面に戻る', requests_path %>

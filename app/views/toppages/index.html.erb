@@ -1,5 +1,6 @@
 <% if logged_in? %>
-  <p>ログイン完了ユーザー<%= current_user.name %></p>
+  <h1>仕事一覧</h1>
+  <%= render 'requests/requests', requests: @requests %>
 <% else %>
   <div class="center jumbotron">
     <div class="text-center">
