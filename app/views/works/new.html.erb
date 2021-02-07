@@ -1,0 +1,22 @@
+<h1 class="mb-5"><%= @request.title %></h1>
+
+<h2>応募者リスト</h2>
+<% if @request.status == 0 %>
+  <% @applies.each do |apply| %>
+      <div class="media-body">
+        <div>
+          <h3><%= link_to apply.worker.name, user_path(apply.worker) %> <span class="text-muted">posted at <%= apply.created_at %></span></h3>
+          <p><%= apply.content %></p>
+        </div>
+        <div>
+          <%= form_with(model: @work, local: true) do |f| %>
+            <%= hidden_field_tag :request_id, apply.request_id %>
+            <%= hidden_field_tag :worker_id, apply.worker_id %>
+            <%= f.submit '決定', class: 'btn btn-primary btn-block' %>
+          <% end %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+<% end %>
+</ul>

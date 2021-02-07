@@ -1,7 +1,7 @@
 class RequestsController < ApplicationController
   def index
     @requests = current_user.requests.order(id: :desc).page(params[:page])
-    
+    @requests = @requests.where(status: 0)
   end
 
   def show

@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   resources :requests, only: [:index, :show, :new, :create, :destroy]
   
   resources :applies, only: [:create, :destroy]
+  resources :works, only: [:index, :show, :new, :create]
+  resources :talks, only: [:create, :destroy]
 end

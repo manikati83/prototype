@@ -14,6 +14,8 @@ class User < ApplicationRecord
     
     has_many :works, foreign_key: 'worker_id'
     
+    has_many :talks
+    
     def apply?(req)
       self.applying.include?(req)
     end

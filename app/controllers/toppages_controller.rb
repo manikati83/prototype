@@ -1,5 +1,7 @@
 class ToppagesController < ApplicationController
   def index
-    @requests = Request.order(id: :desc).page(params[:page])
+    if logged_in?
+      @requests = Request.order(id: :desc).page(params[:page])
+    end
   end
 end

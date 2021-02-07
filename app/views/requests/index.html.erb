@@ -1,5 +1,21 @@
 <h1>依頼画面</h1>
+<div class="mb-5">
+  <%= button_to "依頼作成", {controller: 'requests', action: 'new'}, {method: :get} %>
+</div>
 
-<%= button_to "依頼作成", {controller: 'requests', action: 'new'}, {method: :get} %>
-
-<%= render 'requests/requests', requests: @requests %>
+<h2>応募状況</h2>
+<ul class="list-unstyled mb-3">
+  <% @requests.each do |request| %>
+    <li class="media mb-1">
+      <div class="media-body">
+        <div>
+          <h3><%= link_to request.title, new_work_path(request_id: request.id) %></h3>
+          <p><%= request.content %></p>
+          <p>期限:<%= request.days %></p>
+          <%= link_to request.client.name, user_path(request.client) %> <span class="text-muted">posted at <%= request.created_at %></span>
+        </div>
+      </div>
+    </li>
+  <% end %>
+  <%= paginate @requests %>
+</ul>

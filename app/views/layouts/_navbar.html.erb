@@ -10,7 +10,7 @@
           <% if logged_in? %>
             <li class="navbar-item"><%= link_to '仕事一覧', root_path, class: 'nav-link' %></li>
             <li class="navbar-item"><%= link_to '仕事依頼', requests_path, class: 'nav-link' %></li>
-            <li class="navbar-item"><a href="#" class="nav-link">仕事管理</a></li>
+            <li class="navbar-item"><%= link_to '仕事管理', works_path, class: 'nav-link' %></li>
             <li class="navbar-item"><a href="#" class="nav-link"><%= current_user.name %></a></li>
             <li class="navbar-item"><%= link_to 'Logout', logout_path, method: :delete, class: 'nav-link' %></li>
           <% else %>

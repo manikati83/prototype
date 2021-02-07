@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_06_135808) do
+ActiveRecord::Schema.define(version: 2021_02_07_123110) do
 
   create_table "applies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "worker_id"
@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(version: 2021_02_06_135808) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_requests_on_client_id"
+  end
+
+  create_table "talks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "work_id"
+    t.string "content"
+    t.string "image"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_talks_on_user_id"
+    t.index ["work_id"], name: "index_talks_on_work_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -58,6 +70,8 @@ ActiveRecord::Schema.define(version: 2021_02_06_135808) do
   add_foreign_key "applies", "requests"
   add_foreign_key "applies", "users", column: "worker_id"
   add_foreign_key "requests", "users", column: "client_id"
+  add_foreign_key "talks", "users"
+  add_foreign_key "talks", "works"
   add_foreign_key "works", "requests"
   add_foreign_key "works", "users", column: "worker_id"
 end
