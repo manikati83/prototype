@@ -13,6 +13,7 @@ class User < ApplicationRecord
     has_many :applying, through: :applies, source: :request
     
     has_many :works, foreign_key: 'worker_id'
+    has_many :workings, through: :works, source: :request
     
     has_many :talks
     

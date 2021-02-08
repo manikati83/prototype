@@ -1,2 +1,5 @@
-<h1>Works#show</h1>
-<p>Find me in app/views/works/show.html.erb</p>
+<h1><%= @work.request.title %></h1>
+
+<% @talks.each do |talk| %>
+  <p class="mb-3"><%= talk %></p>
+<% end %>

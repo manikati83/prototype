@@ -1,9 +1,12 @@
 class WorksController < ApplicationController
   def index
+    @client_works = current_user.requests.where(status: 1)
+    @worker_works = current_user.works
   end
 
   def show
-    
+    @work = Work.find(params[:id])
+    @talks = @work.talks.order(id: :desc).page(params[:page])
   end
 
   def new
@@ -13,7 +16,7 @@ class WorksController < ApplicationController
   end
 
   def create
-    user = User.find_by(params[:worker_id])
+    user = User.find(params[:worker_id])
     request = Request.find(params[:request_id])
     request.status = 1
     @work = user.works.build(request_id: request.id)

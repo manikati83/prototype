@@ -9,6 +9,7 @@ class Request < ApplicationRecord
   has_many :applying, through: :applies, source: :worker
   
   has_many :works
+  has_many :workings, through: :works, source: :worker
   
   def client?(user)
     if (self.client == user)

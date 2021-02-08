@@ -1,2 +1,18 @@
-<h1>Works#index</h1>
-<p>Find me in app/views/works/index.html.erb</p>
+<h1>現在進行中の仕事</h1>
+<% if @client_works %>
+  <h2>client</h2>
+  <% @client_works.each do |work| %>
+    <h2><%= work.title %></h2>
+    <p><%= work.workings.name %></p>
+  <% end %>
+<% end %>
+
+<% if @worker_works %>
+  <% @worker_works.each do |work| %>
+    <h2>worker</h2>
+    <% if work.request.status == 1 %>
+      <h2><%= work.request.title %></h2>
+      
+    <% end %>
+  <% end %>
+<% end %>
