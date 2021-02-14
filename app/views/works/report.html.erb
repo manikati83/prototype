@@ -1,0 +1,10 @@
+<% if @work.worker_id == current_user.id || @work.request.client_id == current_user.id %>
+  <h1>作業の報告</h1>
+  
+  <%= form_with(model: @talk, local: true) do |f| %>
+    <%= hidden_field_tag :work_id, @work.id %>
+    <%= hidden_field_tag :status_id, 1 %>
+    <%= f.text_area :content, class: 'form-control', rows: 5 %>
+    <%= f.submit 'Post', class: 'btn btn-primary btn-block' %>
+  <% end %>
+<% end %>

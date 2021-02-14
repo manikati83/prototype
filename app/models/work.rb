@@ -4,5 +4,8 @@ class Work < ApplicationRecord
   
   has_many :talks
   
+  has_many :client_evaluations
+  has_many :worker_evaluations
+  
   validates :deadline, presence: true
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_07_123110) do
+ActiveRecord::Schema.define(version: 2021_02_13_112113) do
 
   create_table "applies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "worker_id"
@@ -23,15 +23,28 @@ ActiveRecord::Schema.define(version: 2021_02_07_123110) do
     t.index ["worker_id"], name: "index_applies_on_worker_id"
   end
 
+  create_table "client_evaluations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "work_id"
+    t.float "evaluation"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "work_id"], name: "index_client_evaluations_on_user_id_and_work_id", unique: true
+    t.index ["user_id"], name: "index_client_evaluations_on_user_id"
+    t.index ["work_id"], name: "index_client_evaluations_on_work_id"
+  end
+
   create_table "requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "client_id"
     t.string "title"
     t.text "content"
     t.integer "status", default: 0
     t.string "image"
-    t.integer "days"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "apply_days"
+    t.date "deadline"
     t.index ["client_id"], name: "index_requests_on_client_id"
   end
 
@@ -54,6 +67,19 @@ ActiveRecord::Schema.define(version: 2021_02_07_123110) do
     t.string "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image"
+  end
+
+  create_table "worker_evaluations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "work_id"
+    t.float "evaluation"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "work_id"], name: "index_worker_evaluations_on_user_id_and_work_id", unique: true
+    t.index ["user_id"], name: "index_worker_evaluations_on_user_id"
+    t.index ["work_id"], name: "index_worker_evaluations_on_work_id"
   end
 
   create_table "works", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -69,9 +95,13 @@ ActiveRecord::Schema.define(version: 2021_02_07_123110) do
 
   add_foreign_key "applies", "requests"
   add_foreign_key "applies", "users", column: "worker_id"
+  add_foreign_key "client_evaluations", "users"
+  add_foreign_key "client_evaluations", "works"
   add_foreign_key "requests", "users", column: "client_id"
   add_foreign_key "talks", "users"
   add_foreign_key "talks", "works"
+  add_foreign_key "worker_evaluations", "users"
+  add_foreign_key "worker_evaluations", "works"
   add_foreign_key "works", "requests"
   add_foreign_key "works", "users", column: "worker_id"
 end

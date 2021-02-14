@@ -1,18 +1,16 @@
 <h1>現在進行中の仕事</h1>
+<!- request ->
 <% if @client_works %>
-  <h2>client</h2>
   <% @client_works.each do |work| %>
-    <h2><%= work.title %></h2>
-    <p><%= work.workings.name %></p>
+    <h3><%= link_to work.title, work_path(work.works.first) %></h3>
+    <p><%= work.workings.first.name %></p>
   <% end %>
 <% end %>
 
+<!- work ->
 <% if @worker_works %>
   <% @worker_works.each do |work| %>
-    <h2>worker</h2>
-    <% if work.request.status == 1 %>
-      <h2><%= work.request.title %></h2>
-      
-    <% end %>
+    <h3><%= link_to work.title, work_path(work.works.first) %></h3>
+    <p><%= work.client.name %></p>
   <% end %>
 <% end %>

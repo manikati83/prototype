@@ -1,8 +1,69 @@
-<div class="row">
-    <aside class="col-sm-4">
+<div class="container">
+  <div class="row">
+    <aside class="col-md-4">
         <div class="card">
           <div class="card-header">
             <h3 class="card-title"><%= @user.name %></h3>
+          </div>
+          <div class="card-body">
+            <img class="mr-2 rounded" src="<%= gravatar_url(@user, { size: 300 }) %>" alt="">
+          </div>
+        <buton class="btn btn-primary"><%= link_to 'プロフィール編集', edit_user_path(@user), class: "text-dark" %></buton>
         </div>
     </aside>
+    <div class="col-md-8">
+      <h3><%= @user.name %>の評価</h3>
+      <div>
+        <p>発注評価</p>
+        <div class="media">
+          <% if !@user.client_evaluations.empty? %>
+            <p>発注数: <%= @user.client_evaluations.count %></p>
+            <p>評　価: <%= @user.client_ave %></p>
+            <div class="media-body">
+              <h3 id="star-rate-client"></h3>
+            </div>
+          <% else %>
+            <p>まだ発注者としての評価はありません。</p>
+          <% end %>
+        </div>
+      </div>
+      
+      <div>
+        <p>受注評価</p>
+        <div class="media">
+          <% if !@user.worker_evaluations.empty? %>
+            <p>受注数: <%= @user.worker_evaluations.count %></p>
+            <p>評　価: <%= @user.worker_ave %></p>
+            <div class="media-body">
+              <h3 id="star-rate-worker"></h3>
+            </div>
+          <% else %>
+            <p>まだ受注者としての評価はありません。</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script>
+  $('#star-rate-worker').raty({
+   size: 36,
+   starOff: "<%= asset_path('star-off.png') %>",
+   starOn: "<%= asset_path('star-on.png') %>",
+   starHalf: "<%= asset_path('star-half.png') %>",
+   half: true, //# ★の半分の入力を行う
+   readOnly: true,
+   score: "<%= @user.worker_ave %>",
+ });
+ 
+ $('#star-rate-client').raty({
+   size: 36,
+   starOff: "<%= asset_path('star-off.png') %>",
+   starOn: "<%= asset_path('star-on.png') %>",
+   starHalf: "<%= asset_path('star-half.png') %>",
+   half: true, //# ★の半分の入力を行う
+   readOnly: true,
+   score: "<%= @user.client_ave %>",
+ });
+</script>

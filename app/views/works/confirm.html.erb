@@ -1,0 +1,45 @@
+<h1>作業確認</h1>
+<h2><%= @talk.first.content %></h2>
+
+<%= link_to '修正依頼をする', work_path(@work), class: 'btn btn-primary' %>
+
+<div class="rating-box mt-3">
+  <%= form_with(model: @worker_evaluation, local:true) do |f| %>
+    <!--<div class="main-rating">-->
+    <!--  <div class="ratings mb-3">-->
+    <!--    <span class="fa fa-star-o" id="star"></span>-->
+    <!--    <span class="fa fa-star-o" id="star"></span>-->
+    <!--    <span class="fa fa-star-o" id="star"></span>-->
+    <!--    <span class="fa fa-star-o" id="star"></span>-->
+    <!--    <span class="fa fa-star-o" id="star"></span>-->
+    <!--  </div>-->
+    <!--  <div class="ml-3 rating-value-display"><span id="rating-value-display">0</span>/5</div>-->
+    <!--</div>-->
+    
+    <div class="form-group" id="star">
+      <%= f.label :evaluation, "評価" %>
+      <%= f.hidden_field :evaluation, id: :review_star %>
+      
+    </div>
+    
+    <%= f.hidden_field :work_id, value: @work.id %>
+    <%= f.text_field :content, class: "form-control", rows: 5 %>
+    <%= f.submit "評価して完了", class: "btn btn-primary mt-3" %>
+  <% end %>
+</div>
+
+<script>
+  
+   $('#star').raty({
+   size: 36,
+   starOff: "<%= asset_path('star-off.png') %>",
+   starOn: "<%= asset_path('star-on.png') %>",
+   starHalf: "<%= asset_path('star-half.png') %>",
+   scoreName: 'worker_evaluation[evaluation]', //# reviewカラムに保存するので忘れないように
+   half: true, //# ★の半分の入力を行う
+ });
+  
+</script>
+
+
+<%#= javascript_include_tag "works.js" %>

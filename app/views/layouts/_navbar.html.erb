@@ -1,6 +1,7 @@
 <header class="mb-4">
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Prototype</a>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark shadow">
+    <div class="container">
+    <a class="navbar-brand bg-danger p-2" href="/">Prototype</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -8,16 +9,23 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         <ul class="navbar-nav">
           <% if logged_in? %>
-            <li class="navbar-item"><%= link_to '仕事一覧', root_path, class: 'nav-link' %></li>
-            <li class="navbar-item"><%= link_to '仕事依頼', requests_path, class: 'nav-link' %></li>
-            <li class="navbar-item"><%= link_to '仕事管理', works_path, class: 'nav-link' %></li>
-            <li class="navbar-item"><a href="#" class="nav-link"><%= current_user.name %></a></li>
-            <li class="navbar-item"><%= link_to 'Logout', logout_path, method: :delete, class: 'nav-link' %></li>
+            <li class="navbar-item mt-4 mr-5"><%= link_to '仕事一覧', root_path, class: 'nav-link border-left' %></li>
+            <li class="navbar-item mt-4 mr-5"><%= link_to '仕事依頼', requests_path, class: 'nav-link border-left' %></li>
+            <li class="navbar-item mt-4 mr-5"><%= link_to '仕事管理', works_path, class: 'nav-link border-left' %></li>
+            <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><img class="rounded mt-2" src="<%= gravatar_url(current_user, { size: 50 }) %>" alt=""></a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li class="dropdown-item"><i class="fas fa-user mr-3"></i><%= link_to 'My profile', user_path(current_user) %></li>
+              <li class="dropdown-divider"></li>
+              <li class="dropdown-item"><i class="fas fa-sign-out-alt mr-3"></i><%= link_to 'Logout', logout_path, method: :delete %></li>
+            </ul>
+          </li>
           <% else %>
             <li class="navbar-item"><%= link_to 'Signup', signup_path, class: 'nav-link' %></li>
             <li class="navbar-item"><%= link_to 'Login', login_path, class: 'nav-link' %></li>
           <% end %>
         </ul>
       </div>
+    </div>
   </nav>
 </header>

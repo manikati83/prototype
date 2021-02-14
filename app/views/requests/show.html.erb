@@ -1,18 +1,57 @@
-<h1><%= @request.title %></h1>
-<p><%= @request.content %></p>
-<% if current_user.id != @request.client_id && !current_user.apply?(@request) %>
-  <h2>応募はこちら</h2>
-  <h3>依頼者へのメッセージ</h3>
-  <%= form_with(model: @apply, local: true) do |f| %>
-    <%= hidden_field_tag :request_id, @request.id %>
-    <%= f.text_area :content %>
-    
-    <%= f.submit '応募する' %>
-  <% end %>
-<% elsif current_user.id != @request.client_id && current_user.apply?(@request) %>
-  <h2>応募済みです</h2>
-  <%= form_with(model: current_user.applies.find_by(request_id: @request.id), local: true, method: :delete) do |f| %>
-    <%= hidden_field_tag :request_id, @request.id %>
-    <%= f.submit '応募を取り消す' %>
-  <% end %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-body">
+          <img class="rounded img-fluid card-img-top mt-3" src="<%= gravatar_url(current_user, { size: 300 }) %>" alt="">
+          <p class="card-text text-center mt-2"><%= link_to current_user.name, user_path(current_user.id) %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div class="card container shadow">
+        <div class="card-header bg-dark row">
+          <div class="col-md-10">
+            <h2 class="card-title text-light"><%= @request.title %></h2>
+          </div>
+          <div class="col-md-2">
+            <div class="text-center">
+              <img class="rounded" src="<%= gravatar_url(@request.client, { size: 70 }) %>" alt="">
+              <p><%= link_to @request.client.name, user_path(@request.client) %></p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <h5 class=""><%= @request.content %></h5>
+        </div>
+      </div>
+      <% if @request.status == 0 %>
+        <!- 自分の出した依頼ではなく、かつ、応募していない ->
+        <% if current_user.id != @request.client_id && !current_user.apply?(@request) %>
+          <div class="text-center">
+            <h2 class="text-monospace mt-5 mb-5 p-3 text-success">応募はこちら</h2>
+            <i class="fas fa-angle-double-down fa-5x fa-green"></i>
+          </div>
+          <h3 class="text-center text-dark text-monospace p-3 mt-5">依頼者へメッセージ</h3>
+          <%= form_with(model: @apply, local: true) do |f| %>
+            <%= hidden_field_tag :request_id, @request.id %>
+            <div class="form-group shadow">
+              <%= f.text_area :content, class: 'form-control', rows: 5 %>
+            </div>
+            <%= f.submit '応募する', class: 'btn btn-primary btn-block' %>
+          <% end %>
+          
+        <!- 自分の出した依頼ではなく、かつ、応募している ->
+        <% elsif current_user.id != @request.client_id && current_user.apply?(@request) %>
+          <div class="text-center">
+            <h2 class="text-monospace mt-5 mb-5 p-3 text-success">応募済みです</h2>
+            <%= form_with(model: current_user.applies.find_by(request_id: @request.id), local: true, method: :delete) do |f| %>
+              <%= hidden_field_tag :request_id, @request.id %>
+              <%= f.submit '応募を取り消す', class: 'btn btn-danger' %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

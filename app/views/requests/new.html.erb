@@ -1,15 +1,48 @@
-<h1>依頼作成</h1>
-<%= form_with(model: @request, local: true) do |f| %>
-  <div>
-    <%= f.label :title, '依頼名' %>
-    <%= f.text_field :title %>
-    <%= f.label :content, '依頼内容' %>
-    <%= f.text_area :content %>
-    <%= f.label :days, '期限' %>
-    <%= f.number_field :days, class: "hoge", min: 1, max: 60 %>
-    
-    <%= f.submit '依頼する' %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-body">
+          <img class="rounded img-fluid card-img-top mt-3" src="<%= gravatar_url(current_user, { size: 300 }) %>" alt="">
+          <p class="card-text text-center mt-2"><%= link_to current_user.name, user_path(current_user.id) %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <h1 class="text-center text-dark text-monospace mb-5 p-3"><i class="fas fa-pen-nib mr-3"></i>依頼作成</h1>
+      
+      <div class="container text-center shadow bg-dark">
+        <%= form_with(model: @request, local: true) do |f| %>
+          <div class="form-group">
+            <h3><%= f.label :title, '依頼名', class: 'text-light text-monospace mb-3 mt-5' %></h3>
+            <%= f.text_field :title, class: 'form-control' %>
+            <h3><%= f.label :content, '依頼内容', class: 'text-light text-monospace mt-5 mb-3' %></h3>
+            <%= f.text_area :content, class: 'form-control', rows:10 %>
+          </div>
+          <div class="form-group row mt-3">
+            <%= f.label :image, "提案イメージ", class:"col-3 text-light text-monospace" %>
+            <div class="col-9 text-light">
+              <%= f.file_field :image %>
+            </div>
+          </div>
+          
+          <div class="form-group row">
+            <%= f.label :apply_days, "応募期限",  class:"col-3 text-light text-monospace" %>
+            <div class="col-9">
+              <%= f.date_field :apply_days %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <%= f.label :deadline, "納品期限",  class:"col-3 text-light text-monospace" %>
+              <div class="col-9">
+                <%= f.date_field :deadline %>
+              </div>
+          </div>
+          <div class="mb-2">
+            <%= f.submit '依頼する', class: 'btn btn-success m-3' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
-<% end %>
-
-<%= link_to '依頼画面に戻る', requests_path %>
+</div>

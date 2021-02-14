@@ -1,12 +1,21 @@
 <ul class="list-unstyled mb-3">
   <% requests.each do |request| %>
-    <li class="media mb-1">
-      <div class="media-body">
-        <div>
-          <h3><%= link_to request.title, request_path(request) %></h3>
-          <p><%= request.content %></p>
-          <p>期限:<%= request.days %></p>
-          <%= link_to request.client.name, user_path(request.client) %> <span class="text-muted">posted at <%= request.created_at %></span>
+    <li class="row ml-3 mb-3 bg-white shadow border">
+      <div class="col-md-10">
+        <h4 class="mb-3 p-2 border-bottom"><%= link_to request.title, request_path(request), class: 'text-info' %></h4>
+        <div class="row md-4">
+          <div class="col-md-6">
+            <p class="font-weight-lighter"><i class="fas fa-hourglass-half mr-3"></i>応募期限　あと: <%= (request.apply_days - Date.today).to_i %> 日</p>
+          </div>
+          <div class="col-md-6">
+            <p class="font-weight-lighter"><i class="fas fa-users mr-3"></i>応募者数: <%= request.applies.count %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="text-center">
+          <img class="rounded mt-2" src="<%= gravatar_url(request.client, { size: 70 }) %>" alt="">
+          <p><%= link_to request.client.name, user_path(request.client) %></p>
         </div>
       </div>
     </li>

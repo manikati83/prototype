@@ -1,4 +1,6 @@
 class AppliesController < ApplicationController
+  before_action :require_user_logged_in
+  
   def create
     @request = Request.find(params[:request_id])
     apply = current_user.applies.build(apply_params)

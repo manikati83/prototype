@@ -1,23 +1,59 @@
-<h1 class="mb-5"><%= @request.title %></h1>
-
-<h2>応募者リスト</h2>
-<% if @request.status == 0 %>
-  <% @applies.each do |apply| %>
-      <div class="media-body">
-        <div>
-          <h3><%= link_to apply.worker.name, user_path(apply.worker) %> <span class="text-muted">posted at <%= apply.created_at %></span></h3>
-          <p><%= apply.content %></p>
-        </div>
-        <div>
-          <%= form_with(model: @work, local: true) do |f| %>
-            <%= hidden_field_tag :request_id, apply.request_id %>
-            <%= hidden_field_tag :worker_id, apply.worker_id %>
-            <%= f.label apply.worker_id %>
-            <%= f.submit '決定', class: 'btn btn-primary btn-block' %>
-          <% end %>
+<% if current_user.id == @request.client.id %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="card">
+          <div class="card-body">
+            <img class="rounded img-fluid card-img-top mt-3" src="<%= gravatar_url(current_user, { size: 300 }) %>" alt="">
+            <p class="card-text text-center mt-2"><%= link_to current_user.name, user_path(current_user.id) %></p>
+          </div>
         </div>
       </div>
-    </li>
-  <% end %>
+      <div class="col-md-10">
+        <div class="card container shadow">
+          <div class="card-header bg-dark row">
+            <div class="col-md-10">
+              <h2 class="card-title text-light"><%= @request.title %></h2>
+            </div>
+            <div class="col-md-2">
+              <div class="text-center">
+                <img class="rounded" src="<%= gravatar_url(@request.client, { size: 70 }) %>" alt="">
+                <p><%= link_to @request.client.name, user_path(@request.client) %></p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class=""><%= @request.content %></h5>
+          </div>
+        </div>
+        
+        <h2 class="text-center text-dark text-monospace mt-5 mb-5 p-3"><i class="fas fa-users mr-3"></i>応募者リスト</h2>
+        <% if @request.status == 0 %>
+          <% @applies.each do |apply| %>
+            <div class="row bg-white shadow border mb-3">
+              <div class="col-md-2">
+                <div class="text-center">
+                <img class="rounded mt-2" src="<%= gravatar_url(apply.worker, { size: 70 }) %>" alt="">
+                <p><%= link_to apply.worker.name, user_path(apply.worker) %></p>
+              </div>
+              </div>
+              <div class="col-md-8">
+                <p class="mt-2"><%= apply.content %></p>
+              </div>
+              <div class="col-md-2 text-center">
+                <%= form_with(model: @work, local: true) do |f| %>
+                  <%= hidden_field_tag :request_id, apply.request_id %>
+                  <%= hidden_field_tag :worker_id, apply.worker_id %>
+                  <%= f.submit '決定', class: 'btn btn-success mt-3' %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+          <% if @applies.count == 0 %>
+            <h5>応募者はまだいません</h5>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <% end %>
-</ul>

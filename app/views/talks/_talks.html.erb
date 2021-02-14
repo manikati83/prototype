@@ -1,0 +1,27 @@
+<ul class="list-unstyled">
+  <% talks.each do |talk| %>
+    <li class="media mb-3">
+      <% if talk.user_id == current_user.id %>
+        <div class="media-body">
+          <p><%= talk.content %></p>
+          <span class="text-muted">posted at <%= talk.created_at %></span>
+        </div>
+        <div>
+          <img class="rounded img-fluid card-img-top mt-3" src="<%= gravatar_url(talk.user, { size: 50 }) %>" alt="">
+          <p class="card-text text-center"><%= link_to talk.user.name, user_path(talk.user) %></p>
+        </div>
+      <% else %>
+        <div>
+          <img class="rounded img-fluid card-img-top mt-3" src="<%= gravatar_url(talk.user, { size: 50 }) %>" alt="">
+          <p class="card-text text-center"><%= link_to talk.user.name, user_path(talk.user) %></p>
+        </div>
+        <div class="media-body">
+          <p><%= talk.content %></p>
+          <span class="text-muted">posted at <%= talk.created_at %></span>
+        </div>
+      <% end %>
+    </li>
+  <% end %>
+  <%= paginate talks %>
+</ul>
+

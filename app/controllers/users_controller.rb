@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:show]
+  before_action :require_user_logged_in, only:[:show]
   
   def show
     @user = User.find(params[:id])
@@ -20,9 +20,24 @@ class UsersController < ApplicationController
     end
   end
   
+  def edit
+    @user = User.find(params[:id])
+  end
+  
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      flash[:success] = 'プロフィールを編集しました。'
+      redirect_to @user
+    else
+      flash.now[:danger] = 'プロフィールを編集できませんでした。'
+      render :show
+    end
+  end
+  
   private
   
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :content, :image)
   end
 end
