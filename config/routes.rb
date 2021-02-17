@@ -23,4 +23,6 @@ Rails.application.routes.draw do
   
   resources :client_evaluations, only: [:index, :show, :create]
   resources :worker_evaluations, only: [:index, :show, :create]
+  
+  resources :articles, only:[:create]
 end

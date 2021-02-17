@@ -6,6 +6,13 @@ class Work < ApplicationRecord
   
   has_many :client_evaluations
   has_many :worker_evaluations
-  
-  validates :deadline, presence: true
+
+  def days
+    today = Date.today
+    deadline = (self.deadline - today).to_i
+    if deadline < 0
+      return -1
+    end
+    return deadline
+  end
 end

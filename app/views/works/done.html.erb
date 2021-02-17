@@ -1,23 +1,46 @@
-<h1>完了画面</h1>
-
-<h2>発注者からのメッセージ</h2>
-<h3 id="star-rate-<%= @worker_evaluation.first.id %>"></h3>
-<p><%= @worker_evaluation.first.content %></p>
-
-<h2>発注者へメッセージ</h2>
-<div class="rating-box mt-3">
-    <%= form_with(model: @client_evaluation, local:true) do |f| %>
-      <div class="form-group" id="star">
-        <%= f.label :evaluation, "評価" %>
-        <%= f.hidden_field :evaluation, id: :review_star %>
-        
+<% if current_user.id == @work.worker_id %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="card">
+          <div class="card-body">
+            <img class="rounded img-fluid card-img-top mt-3" src="<%= gravatar_url(current_user, { size: 300 }) %>" alt="">
+            <p class="card-text text-center mt-2"><%= link_to current_user.name, user_path(current_user.id) %></p>
+          </div>
+        </div>
       </div>
-      <%= f.hidden_field :work_id, value: @work.id %>
-      <%= f.text_field :content, class: "form-control", rows: 5 %>
-      <%= f.submit "評価して完了", class: "btn btn-primary mt-3" %>
-    <% end %>
-</div>
-
+      <div class="col-md-10">
+        <h1 class="dark text-monospace mb-5 p-3 text-center">完了画面</h1>
+        <div class="text-center rounded shadow mb-5">
+          <div class="border rounded">
+            <h2 class="text-center text-light text-monospace mb-3 p-3 bg-success">発注者からのメッセージ</h2>
+            <h4 class="mb-5"><%= @worker_evaluation.first.content %></h4>
+          </div>
+          <div class="bg-secondary">
+            <p class="text-light">あなたの評価</p>
+            <h2 id="star-rate-<%= @worker_evaluation.first.id %>"></h2>
+          </div>
+        </div>
+        
+        <div class="text-center border shadow mb-5">
+          <h2 class="text-center text-light text-monospace p-3 bg-success">発注者へメッセージ</h2>
+          <div class="rating-box">
+              <%= form_with(model: @client_evaluation, local:true) do |f| %>
+                <%= f.hidden_field :work_id, value: @work.id %>
+                <%= f.text_area :content, class: "form-control", rows: 5 %>
+                <div class="form-group bg-secondary text-light p-3" id="star">
+                  <%= f.label :evaluation, "発注者の評価", class: "mr-3" %>
+                  <%= f.hidden_field :evaluation, id: :review_star %>
+                  
+                </div>
+                <%= f.submit "評価して完了", class: "btn btn-success mt-3 mb-3" %>
+              <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 
 <script>
   $('#star-rate-<%= @worker_evaluation.first.id %>').raty({

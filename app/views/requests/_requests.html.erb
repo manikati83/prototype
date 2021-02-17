@@ -1,14 +1,17 @@
 <ul class="list-unstyled mb-3">
   <% requests.each do |request| %>
-    <li class="row ml-3 mb-3 bg-white shadow border">
+    <li class="row ml-3 mb-3 bg-white shadow border rounded">
       <div class="col-md-10">
         <h4 class="mb-3 p-2 border-bottom"><%= link_to request.title, request_path(request), class: 'text-info' %></h4>
         <div class="row md-4">
           <div class="col-md-6">
             <p class="font-weight-lighter"><i class="fas fa-hourglass-half mr-3"></i>応募期限　あと: <%= (request.apply_days - Date.today).to_i %> 日</p>
+            <% if current_user.apply?(request) %>
+              <p><span class="badge badge-success">応募済み</span></p>
+            <% end %>
           </div>
           <div class="col-md-6">
-            <p class="font-weight-lighter"><i class="fas fa-users mr-3"></i>応募者数: <%= request.applies.count %>
+            <p class="font-weight-lighter"><i class="fas fa-users mr-3"></i>応募者数: <%= link_to request.applies.count, new_work_path(request_id: request.id) %>
           </div>
         </div>
       </div>

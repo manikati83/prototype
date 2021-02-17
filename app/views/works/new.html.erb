@@ -1,4 +1,4 @@
-<% if current_user.id == @request.client.id %>
+
   <div class="container">
     <div class="row">
       <div class="col-md-2">
@@ -41,10 +41,12 @@
                 <p class="mt-2"><%= apply.content %></p>
               </div>
               <div class="col-md-2 text-center">
+                <% if current_user.id == @request.client_id %>
                 <%= form_with(model: @work, local: true) do |f| %>
                   <%= hidden_field_tag :request_id, apply.request_id %>
                   <%= hidden_field_tag :worker_id, apply.worker_id %>
                   <%= f.submit '決定', class: 'btn btn-success mt-3' %>
+                <% end %>
                 <% end %>
               </div>
             </div>
@@ -56,4 +58,3 @@
       </div>
     </div>
   </div>
-<% end %>

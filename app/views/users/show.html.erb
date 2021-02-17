@@ -18,7 +18,7 @@
         <div class="media">
           <% if !@user.client_evaluations.empty? %>
             <p>発注数: <%= @user.client_evaluations.count %></p>
-            <p>評　価: <%= @user.client_ave %></p>
+            <p>評　価: <%= @user.client_avg %></p>
             <div class="media-body">
               <h3 id="star-rate-client"></h3>
             </div>
@@ -33,7 +33,7 @@
         <div class="media">
           <% if !@user.worker_evaluations.empty? %>
             <p>受注数: <%= @user.worker_evaluations.count %></p>
-            <p>評　価: <%= @user.worker_ave %></p>
+            <p>評　価: <%= @user.worker_avg %></p>
             <div class="media-body">
               <h3 id="star-rate-worker"></h3>
             </div>
@@ -54,7 +54,7 @@
    starHalf: "<%= asset_path('star-half.png') %>",
    half: true, //# ★の半分の入力を行う
    readOnly: true,
-   score: "<%= @user.worker_ave %>",
+   score: "<%= @user.worker_avg %>",
  });
  
  $('#star-rate-client').raty({
@@ -64,6 +64,6 @@
    starHalf: "<%= asset_path('star-half.png') %>",
    half: true, //# ★の半分の入力を行う
    readOnly: true,
-   score: "<%= @user.client_ave %>",
+   score: "<%= @user.client_avg %>",
  });
 </script>

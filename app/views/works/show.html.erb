@@ -1,37 +1,73 @@
 <% if @work.worker_id == current_user.id || @work.request.client_id == current_user.id %>
-  <h1><%= @work.request.title %></h1>
-  
-  <div>
-    <%= render 'talks/talks', talks: @talks %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="card">
+          <div class="card-body">
+            <img class="rounded img-fluid card-img-top mt-3" src="<%= gravatar_url(current_user, { size: 300 }) %>" alt="">
+            <p class="card-text text-center mt-2"><%= link_to current_user.name, user_path(current_user.id) %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10 border shadow">
+        <div class="row bg-dark mb-3">
+          <div class="col-md-9">
+            <h1 class=" text-light"><%= @work.request.title %></h1>
+          </div>
+          <div class="col-md-3">
+            <% if @work.deadline.nil? %>
+              <p class="text-light mt-3">納品期限　: 未定</p>
+            <% elsif @work.days > 0 %>
+              <p class="text-light mt-3">納品期限 : <%= @work.days %>日</p>
+            <% else %>
+              <p class="text-light mt-3">納品期限 : 期限切れ</p>
+            <% end %>
+          </div>
+        </div>
+        <div>
+
+          <%= render 'talks/talks', talks: @talks %>
+        </div>
+        <div class="mb-3">
+          <%= form_with(model: @talk, local: true) do |f| %>
+            <%= hidden_field_tag :work_id, @work.id %>
+            <%= hidden_field_tag :status_id, 0 %>
+            <%= f.text_area :content, class: 'form-control', rows: 5 %>
+            <%= f.submit '送信', class: 'btn btn-primary btn-block' %>
+          <% end %>
+        </div>
+        <div class="mb-3">
+          <% if @work.worker_id == current_user.id %>
+            <% if @talk_report.empty? && @talk_resubmit.empty? %>
+              <%= link_to '完了報告', report_work_path(@work), class: 'btn btn-success' %>
+            <% elsif @work.request.status == 2 %>
+              <%= link_to '完了報告', "#", class: 'btn btn-secondary' %>
+            <% elsif  !@talk_report.empty? %>
+              <%= link_to '完了報告', edit_work_path(@work, talk_id: @talk_report.first.id), class: 'btn btn-success' %>
+            <% else %>
+              <%= link_to '完了報告', edit_work_path(@work, talk_id: @talk_resubmit.first.id), class: 'btn btn-success' %>
+            <% end %>
+            
+            <% if @work.worker_evaluations.empty? %>
+              <%= link_to '完了画面', "#", class: 'btn btn-secondary' %>
+            <% else %>
+              <% if @work.client_evaluations.empty? %>
+                <%= link_to '完了画面', done_work_path(@work), class: 'btn btn-primary' %>
+              <% else %>
+                <%= link_to '完了済み', "#", class: 'btn btn-secondary' %>
+              <% end %>
+            <% end %>
+            
+          <% else %>
+            <% if @talk_report.empty? || !@work.worker_evaluations.empty? %>
+              <%= link_to '作業確認', "#", class: 'btn btn-secondary' %>
+            <% else %>
+              <%= link_to '作業確認', confirm_work_path(@work), class: 'btn btn-success' %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+      </div>
+    </div>
   </div>
   
-  <%= form_with(model: @talk, local: true) do |f| %>
-    <%= hidden_field_tag :work_id, @work.id %>
-    <%= hidden_field_tag :status_id, 0 %>
-    <%= f.text_area :content, class: 'form-control', rows: 5 %>
-    <%= f.submit 'Post', class: 'btn btn-primary btn-block' %>
-  <% end %>
-  <% if @work.worker_id == current_user.id %>
-    <% if @talk_report.empty? %>
-      <%= link_to '完了報告', report_work_path(@work), class: 'btn btn-success' %>
-    <% else %>
-      <%= link_to '完了報告', edit_work_path(@work, talk_id: @talk_report.first.id), class: 'btn btn-success' %>
-    <% end %>
-    <% if @work.worker_evaluations.empty? %>
-      <%= link_to '完了画面', "#", class: 'btn btn-secondary' %>
-    <% else %>
-      <% if @work.client_evaluations.empty? %>
-        <%= link_to '完了画面', done_work_path(@work), class: 'btn btn-primary' %>
-      <% else %>
-        <%= link_to '完了済み', "#", class: 'btn btn-secondary' %>
-      <% end %>
-    <% end %>
-    
-  <% else %>
-    <% if @talk_report.empty? || !@work.worker_evaluations.empty? %>
-      <%= link_to '作業確認', "#", class: 'btn btn-secondary' %>
-    <% else %>
-      <%= link_to '作業確認', confirm_work_path(@work), class: 'btn btn-success' %>
-    <% end %>
-  <% end %>
-<% end %>

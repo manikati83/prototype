@@ -9,8 +9,8 @@ class AppliesController < ApplicationController
       flash[:success] = '応募しました。'
       redirect_to @request
     else
-      flash.now[:danger] = '応募できませんでした。'
-      render @request
+      flash[:danger] = '応募できませんでした。'
+      redirect_to @request
     end
   end
 
