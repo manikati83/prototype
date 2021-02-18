@@ -8,7 +8,7 @@
           <div class="card-body">
             <img class="mr-2 rounded" src="<%= gravatar_url(@user, { size: 300 }) %>" alt="">
           </div>
-        <buton class="btn btn-primary"><%= link_to 'プロフィール編集', edit_user_path(@user), class: "text-dark" %></buton>
+        <%= link_to 'プロフィール編集', edit_user_path(@user), class: "btn btn-primary" %>
         </div>
     </aside>
     <div class="col-md-8">

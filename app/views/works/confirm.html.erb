@@ -42,7 +42,8 @@
               
             </div>
             <div class="bg-primary">
-              <%= f.label :content, <i class="fab fa-twitter-square mr-3"></i>'ツイート', class: 'text-light' %>
+              <i class="fab fa-twitter"></i>
+              <%= f.label :content, 'ツイート', class: 'text-light' %>
             </div>
             <%= f.text_area :tweet, class: "form-control", rows: 5 %>
             <%= f.submit "ツイートして完了", class: "btn btn-primary mt-3 mb-5" %>

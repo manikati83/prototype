@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_13_112113) do
+ActiveRecord::Schema.define(version: 2021_02_17_124031) do
 
   create_table "applies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "worker_id"
@@ -43,8 +43,8 @@ ActiveRecord::Schema.define(version: 2021_02_13_112113) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "apply_days"
     t.date "deadline"
+    t.date "apply_days"
     t.index ["client_id"], name: "index_requests_on_client_id"
   end
 

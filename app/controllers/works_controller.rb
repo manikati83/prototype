@@ -16,6 +16,9 @@ class WorksController < ApplicationController
     if !@talk_resubmit.empty? && current_user.id == @work.worker_id
       flash[:warning] = '修正依頼が届いています。修正後に再度報告をしてください。'
     end
+    if !@talk_report.empty? && current_user.id != @work.worker_id
+      flash[:warning] = '作業報告が届いています。確認をお願いします。'
+    end
   end
 
   def new
