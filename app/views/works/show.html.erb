@@ -32,7 +32,7 @@
 
           <%= render 'talks/talks', talks: @talks %>
         </div>
-        <div class="mb-3">
+        <div class="mb-5">
           <%= form_with(model: @talk, local: true) do |f| %>
             <%= hidden_field_tag :work_id, @work.id %>
             <%= hidden_field_tag :status_id, 0 %>
@@ -53,7 +53,7 @@
                 <% elsif @work.request.status == 2 %>
                   <div class="border shadow rounded bg-secondary">
                     <h4 class="bg-dark text-secondary">依頼の完了報告をする。</h4>
-                    <p class="btn btn-dark mb-0">完了報告</p>
+                    <p class="btn btn-dark mb-0 text-secondary">完了報告</p>
                   </div>
                 <% elsif  !@talk_report.empty? %>
                   <div class="border shadow rounded">
@@ -71,7 +71,7 @@
                 <% if @work.worker_evaluations.empty? %>
                   <div class="border shadow rounded bg-secondary">
                     <h4 class="bg-dark text-secondary">完了画面で依頼を完了する。</h4>
-                    <p class="btn btn-dark mb-0">完了画面</p>
+                    <p class="btn btn-dark mb-0 text-secondary">完了画面</p>
                   </div>
                 <% else %>
                   <% if @work.client_evaluations.empty? %>
@@ -80,9 +80,9 @@
                       <%= link_to '完了画面', done_work_path(@work), class: 'btn btn-primary' %>
                     </div>
                   <% else %>
-                    <div class="border shadow rounded">
+                    <div class="border shadow rounded bg-secondary">
                       <h4 class="bg-dark text-light">完了画面で依頼を完了する。</h4>
-                      <p class="btn btn-secondary mb-0">完了済み</p>
+                      <p class="btn btn-dark mb-0 text-secondary">完了済み</p>
                     </div>
                   <% end %>
                 <% end %>
@@ -94,7 +94,7 @@
               <% if @talk_report.empty? || !@work.worker_evaluations.empty? %>
                 <div class="border shadow rounded bg-secondary">
                   <h4 class="bg-dark text-secondary">作業確認画面で依頼の完了をする。</h4>
-                  <p class="btn btn-dark mb-0">作業確認</p>
+                  <p class="btn btn-dark mb-0 text-secondary">作業確認</p>
                 </div>
               <% else %>
                 <div class="border shadow rounded">
