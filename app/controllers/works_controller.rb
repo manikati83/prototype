@@ -16,7 +16,7 @@ class WorksController < ApplicationController
     if !@talk_resubmit.empty? && current_user.id == @work.worker_id
       flash[:warning] = '修正依頼が届いています。修正後に再度報告をしてください。'
     end
-    if !@talk_report.empty? && current_user.id != @work.worker_id
+    if !@talk_report.empty? && current_user.id != @work.worker_id && @work.request.status == 1
       flash[:warning] = '作業報告が届いています。確認をお願いします。'
     end
   end
@@ -50,6 +50,10 @@ class WorksController < ApplicationController
   def edit
     @work = Work.find(params[:id])
     @talk = Talk.find(params[:talk_id])
+  end
+  
+  def content
+    @work = Work.find(params[:id])
   end
   
   def report

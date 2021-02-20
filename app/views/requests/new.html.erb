@@ -26,28 +26,33 @@
       
       <div class="container text-center shadow bg-dark">
         <%= form_with(model: @request, local: true) do |f| %>
-          <div class="form-group">
-            <h3><%= f.label :title, '依頼名', class: 'text-light text-monospace mb-3 mt-5' %></h3>
+          <div class="form-group required">
+            <h3><%= f.label :title, '依頼名', class: 'text-light text-monospace mt-5' %></h3>
+            <p><%= f.label :title, '必須', class: 'text-danger text-monospace' %></p>
             <%= f.text_field :title, class: 'form-control' %>
-            <h3><%= f.label :content, '依頼内容', class: 'text-light text-monospace mt-5 mb-3' %></h3>
+            <h3><%= f.label :content, '依頼内容', class: 'text-light text-monospace mt-5' %></h3>
+            <p><%= f.label :content, '必須', class: 'text-danger text-monospace' %></p>
             <%= f.text_area :content, class: 'form-control', rows:10 %>
           </div>
           <div class="form-group row mt-3">
-            <%= f.label :image, "提案イメージ", class:"col-3 text-light text-monospace" %>
-            <div class="col-9 text-light">
+            <%= f.label :image, "提案イメージ", class:"col-md-3 text-light text-monospace" %>
+            <div class="col-md-9 text-light">
               <%= f.file_field :image %>
             </div>
           </div>
           
           <div class="form-group row">
-            <%= f.label :apply_days, "応募期限",  class:"col-3 text-light text-monospace" %>
-            <div class="col-9">
+            <div class="col-md-3">
+              <%= f.label :apply_days, "応募期限",  class:"text-light text-monospace" %>
+              <%= f.label :apply_days, '必須', class:"text-danger text-monospace" %>
+            </div>
+            <div class="col-md-9">
               <%= f.date_field :apply_days %>
             </div>
           </div>
           <div class="form-group row">
             <%= f.label :deadline, "納品期限",  class:"col-3 text-light text-monospace" %>
-              <div class="col-9">
+              <div class="col-md-9">
                 <%= f.date_field :deadline %>
               </div>
           </div>

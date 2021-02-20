@@ -1,0 +1,37 @@
+<% if @work.worker_id == current_user.id || @work.request.client_id == current_user.id %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="card">
+          <div class="card-body">
+            <img class="rounded img-fluid card-img-top mt-3" src="<%= gravatar_url(current_user, { size: 300 }) %>" alt="">
+            <p class="card-text text-center mt-2"><%= link_to current_user.name, user_path(current_user.id) %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10 border shadow">
+        <ul class="nav nav-tabs nav-justified mb-3">
+          <li class="nav-item"><a href="<%= work_path(@work) %>" class="nav-link <%= 'active' if current_page?(work_path(@work)) %>">メッセージ画面</a></li>
+          <li class="nav-item"><a href="<%= content_work_path(@work) %>" class="nav-link <%= 'active' if current_page?(content_work_path(@work)) %>">依頼内容</a></li>
+        </ul>
+        <div class="row bg-dark mb-3">
+          <div class="col-md-9">
+            <h3 class=" text-light p-3"><%= @work.request.title %></h3>
+          </div>
+          <div class="col-md-3">
+            <% if @work.deadline.nil? %>
+              <p class="text-light mt-3">納品期限　: 未定</p>
+            <% elsif @work.days > 0 %>
+              <p class="text-light mt-3">納品期限 : <%= @work.days %>日</p>
+            <% else %>
+              <p class="text-light mt-3">納品期限 : 期限切れ</p>
+            <% end %>
+          </div>
+        </div>
+        <div class="mb-3">
+            <p><%= @work.request.content %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>

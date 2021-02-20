@@ -5,7 +5,8 @@ class Request < ApplicationRecord
   validates :content, presence: true, length: { maximum: 500 }
   validates :apply_days, presence: true
   
-  has_many :applies
+#  has_many :applies
+  has_many :applies, dependent: :destroy
   has_many :applying, through: :applies, source: :worker
   
   has_many :works

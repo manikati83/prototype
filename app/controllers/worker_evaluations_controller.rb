@@ -20,7 +20,7 @@ class WorkerEvaluationsController < ApplicationController
       flash[:success] = '評価しました。'
       redirect_to @work
     else
-      flash[:danger] = '評価できませんでした。'
+      flash[:danger] = '受注者へコメントまたは評価をしてください。'
       redirect_back(fallback_location: root_path)
     end
   end

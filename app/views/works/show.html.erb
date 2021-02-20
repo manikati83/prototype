@@ -10,9 +10,13 @@
         </div>
       </div>
       <div class="col-md-10 border shadow">
+        <ul class="nav nav-tabs nav-justified mb-3">
+          <li class="nav-item"><a href="<%= work_path(@work) %>" class="nav-link <%= 'active' if current_page?(work_path(@work)) %>">メッセージ画面</a></li>
+          <li class="nav-item"><a href="<%= content_work_path(@work) %>" class="nav-link <%= 'active' if current_page?(content_work_path(@work)) %>">依頼内容</a></li>
+        </ul>
         <div class="row bg-dark mb-3">
           <div class="col-md-9">
-            <h1 class=" text-light"><%= @work.request.title %></h1>
+            <h3 class=" text-light p-3"><%= @work.request.title %></h3>
           </div>
           <div class="col-md-3">
             <% if @work.deadline.nil? %>
@@ -38,32 +42,67 @@
         </div>
         <div class="mb-3">
           <% if @work.worker_id == current_user.id %>
-            <% if @talk_report.empty? && @talk_resubmit.empty? %>
-              <%= link_to '完了報告', report_work_path(@work), class: 'btn btn-success' %>
-            <% elsif @work.request.status == 2 %>
-              <%= link_to '完了報告', "#", class: 'btn btn-secondary' %>
-            <% elsif  !@talk_report.empty? %>
-              <%= link_to '完了報告', edit_work_path(@work, talk_id: @talk_report.first.id), class: 'btn btn-success' %>
-            <% else %>
-              <%= link_to '完了報告', edit_work_path(@work, talk_id: @talk_resubmit.first.id), class: 'btn btn-success' %>
-            <% end %>
-            
-            <% if @work.worker_evaluations.empty? %>
-              <%= link_to '完了画面', "#", class: 'btn btn-secondary' %>
-            <% else %>
-              <% if @work.client_evaluations.empty? %>
-                <%= link_to '完了画面', done_work_path(@work), class: 'btn btn-primary' %>
-              <% else %>
-                <%= link_to '完了済み', "#", class: 'btn btn-secondary' %>
-              <% end %>
-            <% end %>
-            
+            <div class="text-center">
+              <h3 class="mb-5 mt-3">依頼報告・完了画面はこちら</h3>
+              <div class="text-center mb-5">
+                <% if @talk_report.empty? && @talk_resubmit.empty? %>
+                  <div class="border shadow rounded">
+                    <h4 class="bg-dark text-light">依頼の完了報告をする。</h4>
+                    <%= link_to '完了報告', report_work_path(@work), class: 'btn btn-success' %>
+                  </div>
+                <% elsif @work.request.status == 2 %>
+                  <div class="border shadow rounded bg-secondary">
+                    <h4 class="bg-dark text-secondary">依頼の完了報告をする。</h4>
+                    <p class="btn btn-dark mb-0">完了報告</p>
+                  </div>
+                <% elsif  !@talk_report.empty? %>
+                  <div class="border shadow rounded">
+                    <h4 class="bg-dark text-light">依頼の完了報告をする。</h4>
+                    <%= link_to '完了報告', edit_work_path(@work, talk_id: @talk_report.first.id), class: 'btn btn-success' %>
+                  </div>
+                <% else %>
+                  <div class="border shadow rounded">
+                    <h4 class="bg-dark text-light">依頼の完了報告をする。</h4>
+                    <%= link_to '完了報告', edit_work_path(@work, talk_id: @talk_resubmit.first.id), class: 'btn btn-success' %>
+                  </div>
+                <% end %>
+              </div>
+              <div class="text-center">
+                <% if @work.worker_evaluations.empty? %>
+                  <div class="border shadow rounded bg-secondary">
+                    <h4 class="bg-dark text-secondary">完了画面で依頼を完了する。</h4>
+                    <p class="btn btn-dark mb-0">完了画面</p>
+                  </div>
+                <% else %>
+                  <% if @work.client_evaluations.empty? %>
+                    <div class="border shadow rounded">
+                      <h4 class="bg-dark text-light">完了画面で依頼を完了する。</h4>
+                      <%= link_to '完了画面', done_work_path(@work), class: 'btn btn-primary' %>
+                    </div>
+                  <% else %>
+                    <div class="border shadow rounded">
+                      <h4 class="bg-dark text-light">完了画面で依頼を完了する。</h4>
+                      <p class="btn btn-secondary mb-0">完了済み</p>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
           <% else %>
-            <% if @talk_report.empty? || !@work.worker_evaluations.empty? %>
-              <%= link_to '作業確認', "#", class: 'btn btn-secondary' %>
-            <% else %>
-              <%= link_to '作業確認', confirm_work_path(@work), class: 'btn btn-success' %>
-            <% end %>
+            <div class="text-center">
+              <h3 class="mb-3 mt-3">作業確認はこちら</h3></h3>
+              <% if @talk_report.empty? || !@work.worker_evaluations.empty? %>
+                <div class="border shadow rounded bg-secondary">
+                  <h4 class="bg-dark text-secondary">作業確認画面で依頼の完了をする。</h4>
+                  <p class="btn btn-dark mb-0">作業確認</p>
+                </div>
+              <% else %>
+                <div class="border shadow rounded">
+                  <h4 class="bg-dark text-light">作業確認画面で依頼の完了をする。</h4>
+                  <%= link_to '作業確認', confirm_work_path(@work), class: 'btn btn-success' %>
+                </div>
+              <% end %>
+            </div>
           <% end %>
         </div>
       <% end %>

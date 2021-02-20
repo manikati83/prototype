@@ -19,9 +19,14 @@ class RequestsController < ApplicationController
   def create
     @request = current_user.requests.build(request_params)
     today = Date.today
+    
+    unless @request.content
+      flash.now[danger] = '依頼内容を入力してください。'
+      return render :new
+    end
     if @request.apply_days && @request.deadline
       if @request.apply_days > @request.deadline
-        flash.now[:danger] = "納品期限が不正です。"
+        flash.now[:danger] = "納品期限が応募期限より前です。"
         return render :new
       elsif @request.apply_days <= today
         flash.now[:danger] = "応募期限が過ぎています。"
@@ -41,7 +46,7 @@ class RequestsController < ApplicationController
       flash[:success] = "依頼を作成しました。"
       redirect_to requests_path
     else
-      flash.now[:danger] = "依頼を作成できませんでした。"
+      flash.now[:danger] = "必須項目の入力してください。"
       render :new
     end
   end

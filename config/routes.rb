@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :applies, only: [:create, :destroy]
   resources :works, only: [:index, :show, :edit, :new, :create] do
     member do
+      get :content
       get :report
       get :confirm
       get :done
