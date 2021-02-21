@@ -31,7 +31,7 @@
         <div class="mb-3">
             <p><%= @work.request.content %></p>
             <% if !@work.request.image.url.nil? %>
-              <%= image_tag @work.request.image.url %>
+              <%= image_tag @work.request.image.url, style: 'max-width: 100%;' %>
             <% end %>
         </div>
       </div>

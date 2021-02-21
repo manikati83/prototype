@@ -24,7 +24,7 @@
         <div class="card-body">
           <h5 class=""><%= @request.content %></h5>
           <% if !@request.image.url.nil? %>
-            <%= image_tag @request.image.url %>
+            <%= image_tag @request.image.url, style: 'max-width: 100%;' %>
           <% end %>
         </div>
       </div>

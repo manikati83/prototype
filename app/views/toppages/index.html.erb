@@ -11,7 +11,9 @@
       </div>
       <div class="col-md-10">
         <h1 class="text-center text-dark text-monospace mb-5 p-3"><i class="fas fa-list mr-1"></i> Work Lists</h1>
-        <%= render 'requests/requests', requests: @requests %>
+        <div class="container">
+          <%= render 'requests/requests', requests: @requests %>
+        </div>
       </div>
     </div>
   </div>
