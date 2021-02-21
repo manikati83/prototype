@@ -34,6 +34,7 @@
         </div>
         <div class="mb-5">
           <%= form_with(model: @talk, local: true) do |f| %>
+            <%= render 'layouts/error_messages', model: f.object %>
             <%= hidden_field_tag :work_id, @work.id %>
             <%= hidden_field_tag :status_id, 0 %>
             <%= f.text_area :content, class: 'form-control', rows: 5 %>
@@ -81,7 +82,7 @@
                     </div>
                   <% else %>
                     <div class="border shadow rounded bg-secondary">
-                      <h4 class="bg-dark text-light">完了画面で依頼を完了する。</h4>
+                      <h4 class="bg-dark text-secondary">完了画面で依頼を完了する。</h4>
                       <p class="btn btn-dark mb-0 text-secondary">完了済み</p>
                     </div>
                   <% end %>

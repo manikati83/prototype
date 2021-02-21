@@ -1,4 +1,4 @@
-<% if current_user.id == @work.request.client_id %>
+<% if current_user.id == @work.request.client_id && @work.request.status == 1 %>
   <div class="container">
     <div class="row">
       <div class="col-md-2">
@@ -16,11 +16,12 @@
             <h3 class="card-title text-light">作業内容</h3>
           </div>
           <div class="card-body mb-5">
-            <h4><%= @talk.first.content %></h4>
+            <h4><%= @talk_report.first.content %></h4>
           </div>
         </div>
         <div class="text-center shadow rounded mb-5">
           <%= form_with(model: @resubmit, local: true) do |f| %>
+            <%= render 'layouts/error_messages', model: f.object %>
             <%= hidden_field_tag :work_id, @work.id %>
             <%= hidden_field_tag :status_id, 3 %>
             <%= f.text_area :content, class: 'form-control', rows: 3 %>
@@ -32,6 +33,7 @@
         
         <div class="rating-box mt-3">
           <%= form_with(model: @worker_evaluation, local:true) do |f| %>
+            <%= render 'layouts/error_messages', model: f.object %>
             <%= f.hidden_field :work_id, value: @work.id %>
             <div class="bg-secondary p-2"><%= f.label :content, '受注者へメッセージ', class: 'text-light' %></div>
             <%= f.text_area :content, class: "form-control", rows: 5 %>

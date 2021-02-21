@@ -1,0 +1,106 @@
+<% if @work.worker_id == current_user.id %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="card">
+          <div class="card-body">
+            <img class="rounded img-fluid card-img-top mt-3" src="<%= gravatar_url(current_user, { size: 300 }) %>" alt="">
+            <p class="card-text text-center mt-2"><%= link_to current_user.name, user_path(current_user.id) %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10 border shadow">
+        <ul class="nav nav-tabs nav-justified mb-3">
+          <li class="nav-item"><a href="<%= work_path(@work) %>" class="nav-link <%= 'active' if current_page?(work_path(@work)) %>">メッセージ画面</a></li>
+          <li class="nav-item"><a href="<%= content_work_path(@work) %>" class="nav-link <%= 'active' if current_page?(content_work_path(@work)) %>">依頼内容</a></li>
+        </ul>
+        <div class="row bg-dark mb-3">
+          <div class="col-md-9">
+            <h3 class=" text-light p-3"><%= @work.request.title %></h3>
+          </div>
+          <div class="col-md-3">
+            <% if @work.deadline.nil? %>
+              <p class="text-light mt-3">納品期限　: 未定</p>
+            <% elsif @work.days > 0 %>
+              <p class="text-light mt-3">納品期限 : <%= @work.days %>日</p>
+            <% else %>
+              <p class="text-light mt-3">納品期限 : 期限切れ</p>
+            <% end %>
+          </div>
+        </div>
+          <div>
+            <div class="text-center rounded shadow mb-5">
+              <div class="border rounded">
+                <h2 class="text-center text-light text-monospace mb-3 p-3 bg-success">発注者からのメッセージ</h2>
+                <h4 class="mb-5"><%= @worker_evaluation.first.content %></h4>
+              </div>
+              <div class="bg-secondary">
+                <p class="text-light">あなたの評価</p>
+                <h2 id="star-rate-<%= @worker_evaluation.first.id %>"></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <% if @work.request.client_id == current_user.id %>
+    <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="card">
+          <div class="card-body">
+            <img class="rounded img-fluid card-img-top mt-3" src="<%= gravatar_url(current_user, { size: 300 }) %>" alt="">
+            <p class="card-text text-center mt-2"><%= link_to current_user.name, user_path(current_user.id) %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10 border shadow">
+        <ul class="nav nav-tabs nav-justified mb-3">
+          <li class="nav-item"><a href="<%= work_path(@work) %>" class="nav-link <%= 'active' if current_page?(work_path(@work)) %>">メッセージ画面</a></li>
+          <li class="nav-item"><a href="<%= content_work_path(@work) %>" class="nav-link <%= 'active' if current_page?(content_work_path(@work)) %>">依頼内容</a></li>
+        </ul>
+        <div class="row bg-dark mb-3">
+          <div class="col-md-9">
+            <h3 class=" text-light p-3"><%= @work.request.title %></h3>
+          </div>
+          <div class="col-md-3">
+            <% if @work.deadline.nil? %>
+              <p class="text-light mt-3">納品期限　: 未定</p>
+            <% elsif @work.days > 0 %>
+              <p class="text-light mt-3">納品期限 : <%= @work.days %>日</p>
+            <% else %>
+              <p class="text-light mt-3">納品期限 : 期限切れ</p>
+            <% end %>
+          </div>
+        </div>
+          <div>
+            <div class="text-center rounded shadow mb-5">
+              <div class="border rounded">
+                <h2 class="text-center text-light text-monospace mb-3 p-3 bg-success">受注者からのメッセージ</h2>
+                <h4 class="mb-5"><%= @client_evaluation.first.content %></h4>
+              </div>
+              <div class="bg-secondary">
+                <p class="text-light">あなたの評価</p>
+                <h2 id="star-rate-<%= @client_evaluation.first.id %>"></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+
+ <script>
+  $('#star-rate-<%= @client_evaluation.first.id %>').raty({
+   size: 36,
+   starOff: "<%= asset_path('star-off.png') %>",
+   starOn: "<%= asset_path('star-on.png') %>",
+   starHalf: "<%= asset_path('star-half.png') %>",
+   half: true, //# ★の半分の入力を行う
+   readOnly: true,
+   score: "<%= @client_evaluation.first.evaluation %>",
+ });
+ </script>

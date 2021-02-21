@@ -1,16 +1,20 @@
 class AppliesController < ApplicationController
   before_action :require_user_logged_in
   
+  def index
+    redirect_to root_path
+  end
+  
   def create
     @request = Request.find(params[:request_id])
-    apply = current_user.applies.build(apply_params)
-    apply.request_id = @request.id
-    if apply.save
+    @apply = current_user.applies.build(apply_params)
+    @apply.request_id = @request.id
+    if @apply.save
       flash[:success] = '応募しました。'
       redirect_to @request
     else
       flash[:danger] = '応募できませんでした。'
-      redirect_to @request
+      render template: "requests/show"
     end
   end
 

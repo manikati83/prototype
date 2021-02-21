@@ -26,6 +26,7 @@
       
       <div class="container text-center shadow bg-dark">
         <%= form_with(model: @request, local: true) do |f| %>
+          <%= render 'layouts/error_messages', model: f.object %>
           <div class="form-group required">
             <h3><%= f.label :title, '依頼名', class: 'text-light text-monospace mt-5' %></h3>
             <p><%= f.label :title, '必須', class: 'text-danger text-monospace' %></p>

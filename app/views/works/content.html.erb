@@ -30,6 +30,9 @@
         </div>
         <div class="mb-3">
             <p><%= @work.request.content %></p>
+            <% if !@work.request.image.url.nil? %>
+              <%= image_tag @work.request.image.url %>
+            <% end %>
         </div>
       </div>
     </div>

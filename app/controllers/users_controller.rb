@@ -3,6 +3,8 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @done_works = current_user.workings.where(status: 2)
+    @finish_works = current_user.requests.where(status: 2)
   end
 
   def new

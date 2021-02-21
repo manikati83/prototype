@@ -61,6 +61,6 @@ class RequestsController < ApplicationController
   private
   
   def request_params
-    params.require(:request).permit(:title, :content, :apply_days, :deadline)
+    params.require(:request).permit(:title, :content, :apply_days, :deadline, :image)
   end
 end

@@ -24,6 +24,9 @@
           </div>
           <div class="card-body">
             <h5 class=""><%= @request.content %></h5>
+            <% if !@request.image.url.nil? %>
+              <%= image_tag @request.image.url %>
+            <% end %>
           </div>
         </div>
         

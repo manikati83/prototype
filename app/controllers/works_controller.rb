@@ -63,7 +63,7 @@ class WorksController < ApplicationController
   
   def confirm
     @work = Work.find(params[:id])
-    @talk = @work.talks.where(status: 1)
+    @talk_report = @work.talks.where(status: 1)
     @resubmit = current_user.talks.build
     @worker_evaluation = WorkerEvaluation.new
   end
@@ -72,6 +72,13 @@ class WorksController < ApplicationController
     @work = Work.find(params[:id])
     @worker_evaluation = @work.worker_evaluations
     @client_evaluation = ClientEvaluation.new
+    @status = ClientEvaluation.where(work_id: @work.id)
+  end
+  
+  def finish
+    @work = Work.find(params[:id])
+    @worker_evaluation = @work.worker_evaluations
+    @client_evaluation = @work.client_evaluations
   end
   
 end

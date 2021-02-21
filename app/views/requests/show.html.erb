@@ -23,6 +23,9 @@
         </div>
         <div class="card-body">
           <h5 class=""><%= @request.content %></h5>
+          <% if !@request.image.url.nil? %>
+            <%= image_tag @request.image.url %>
+          <% end %>
         </div>
       </div>
       <% if @request.status == 0 %>
@@ -34,6 +37,7 @@
           </div>
           <h3 class="text-center text-dark text-monospace p-3 mt-5">依頼者へメッセージ</h3>
           <%= form_with(model: @apply, local: true) do |f| %>
+            <%= render 'layouts/error_messages', model: f.object %>
             <%= hidden_field_tag :request_id, @request.id %>
             <div class="form-group shadow">
               <%= f.text_area :content, class: 'form-control', rows: 5 %>

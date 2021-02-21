@@ -2,6 +2,7 @@ class WorkerEvaluationsController < ApplicationController
   before_action :set_twitter_client
   
   def index
+    redirect_to works_path
   end
 
   def show
@@ -11,17 +12,24 @@ class WorkerEvaluationsController < ApplicationController
     @tweet = params[:worker_evaluation][:tweet]
 
     @work = Work.find(params[:worker_evaluation][:work_id])
+    @talk_report = @work.talks.where(status: 1)
     request = @work.request
     request.status = 2
     user = User.find(@work.worker_id)
     @worker_evaluation = WorkerEvaluation.new(evaluation_params)
     @worker_evaluation.user_id = user.id
+    if @tweet.encode("EUC-JP").bytesize >= 285
+      @resubmit = current_user.talks.build
+      flash[:danger] = 'ツイートできる文字数を超えています。'
+      return redirect_to confirm_work_path(@work.id)
+    end
     if @worker_evaluation.save && request.save && @client.update(@tweet)
       flash[:success] = '評価しました。'
       redirect_to @work
     else
-      flash[:danger] = '受注者へコメントまたは評価をしてください。'
-      redirect_back(fallback_location: root_path)
+      @resubmit = current_user.talks.build
+      flash[:danger] = @worker_evaluation.errors.full_messages
+      redirect_to confirm_work_path(@work.id)
     end
   end
   

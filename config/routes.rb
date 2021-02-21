@@ -10,17 +10,18 @@ Rails.application.routes.draw do
   
   resources :requests, only: [:index, :show, :new, :create, :destroy]
   
-  resources :applies, only: [:create, :destroy]
+  resources :applies, only: [:index, :create, :destroy]
   resources :works, only: [:index, :show, :edit, :new, :create] do
     member do
       get :content
       get :report
       get :confirm
       get :done
+      get :finish
     end
   end
   
-  resources :talks, only: [:create, :update, :destroy]
+  resources :talks, only: [:index, :show, :create, :update, :destroy]
   
   resources :client_evaluations, only: [:index, :show, :create]
   resources :worker_evaluations, only: [:index, :show, :create]

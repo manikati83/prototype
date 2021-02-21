@@ -1,4 +1,4 @@
-<% if current_user.id == @work.worker_id %>
+<% if current_user.id == @work.worker_id && @status.empty? %>
   <div class="container">
     <div class="row">
       <div class="col-md-2">
@@ -26,6 +26,7 @@
           <h2 class="text-center text-light text-monospace p-3 bg-success">発注者へメッセージ</h2>
           <div class="rating-box">
               <%= form_with(model: @client_evaluation, local:true) do |f| %>
+                <%= render 'layouts/error_messages', model: f.object %>
                 <%= f.hidden_field :work_id, value: @work.id %>
                 <%= f.text_area :content, class: "form-control", rows: 5 %>
                 <div class="form-group bg-secondary text-light p-3" id="star">
