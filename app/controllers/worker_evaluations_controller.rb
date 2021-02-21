@@ -18,7 +18,7 @@ class WorkerEvaluationsController < ApplicationController
     user = User.find(@work.worker_id)
     @worker_evaluation = WorkerEvaluation.new(evaluation_params)
     @worker_evaluation.user_id = user.id
-    if @tweet.encode("EUC-JP").bytesize >= 285
+    if @tweet.length >= 70
       @resubmit = current_user.talks.build
       flash[:danger] = 'ツイートできる文字数を超えています。'
       return redirect_to confirm_work_path(@work.id)
