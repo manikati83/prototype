@@ -54,9 +54,10 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'kaminari'
-gem 'carrierwave'
+gem 'carrierwave', '~> 1.3', '>= 1.3.1'
 gem 'twitter'
 gem 'dotenv-rails'
+gem 'cloudinary'
 
 gem 'omniauth-twitter'
 gem "omniauth-rails_csrf_protection"
