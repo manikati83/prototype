@@ -16,8 +16,8 @@ class ClientEvaluationsController < ApplicationController
       redirect_to @work
     else
       @worker_evaluation = @work.worker_evaluations
-      flash[:danger] = '発注者へコメントまたは評価をしてください。'
-      render template: "works/done"
+      flash[:danger] = @client_evaluation.errors.full_messages
+      redirect_to done_work_path(@work.id)
     end
   end
   
